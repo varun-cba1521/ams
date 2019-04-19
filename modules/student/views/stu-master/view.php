@@ -117,7 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?= $this->render('_tab_stu_documents', ['stu_docs' => $stu_docs, 'model'=>$model]) ?>	
 			</div>
 			<div class="tab-pane" id="followup">
-				<?= $this->render('_tab_stu_followup', ['followup' => $followup, 'info' => $info, 'model'=>$model, 'stuid' => $stuid, 'empinfo' => $empinfo]) ?>	
+				<?= $this->render('_tab_stu_followup', ['followup' => $followup, 'stuid' => $stuid, 'empinfo' => $empinfo]) ?>	
 			</div>
 		 <?php if(!Yii::$app->session->get('stu_id')) : ?>
 			<div class="tab-pane" id="fees">

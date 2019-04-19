@@ -16,15 +16,14 @@ $adminUser = array_keys(\Yii::$app->authManager->getRolesByUser(Yii::$app->user-
 
 <?php
 $empSession = Yii::$app->session->get('emp_id');
-$info1 = $followup::find()->where(['student_id' => $stuid])->all();
-$info2 = $empinfo::find()->where(['emp_info_id' => $empSession])->limit(1)->one();
+$info1 = $followup::find()->where(['student_id' => $stuid])->orderBy('stamp DESC')->all();
 ?>
 
-<<div class="row">
+<div class="row">
 <div class="col-md-12">
 	<div class="box box-warning">
 		<div class="box-header with-border">
-			<h3 class="box-title"><i class="fa fa-list-ul"></i> <?php echo Yii::t('followup', 'All Follow-ups'); ?></h3>
+			<h3 class="box-title"><i class="fa fa-list-ul"></i> <?php echo Yii::t('followup', ''); ?></h3>
 			<div class="box-tools <?= (Yii::$app->language == 'ar') ? 'pull-left' : 'pull-right'; ?>">
 				<button class="btn btn-warning btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
 				<button class="btn btn-warning btn-sm" title="Remove" data-toggle="tooltip" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -36,19 +35,19 @@ $info2 = $empinfo::find()->where(['emp_info_id' => $empSession])->limit(1)->one(
 					<tr>
 						<th><?php echo Yii::t('followup', 'Sr.No'); ?></th>
 						<th><?php echo Yii::t('followup', 'Recent Faculty'); ?></th>
-						<th><?php echo Yii::t('followup', 'Candidate Name'); ?></th>
-						<th><?php echo Yii::t('followup', 'Candidate Status'); ?></th>
+						<th><?php echo Yii::t('followup', 'Follow-up Status'); ?></th>
 						<th><?php echo Yii::t('followup', 'Comments'); ?></th>
 						<th><?php echo Yii::t('followup', 'Timestamp'); ?></th>
 					</tr>
 				</thead>
 				<tbody>
-				<?php if($infoa) : ?>
-				<?php foreach($info1 as $v) : ?>
+				<?php if($info1) : ?>
+				<?php foreach($info1 as $v) :
+				$info2 = $empinfo::find()->where(['emp_info_id' => $v['emp_id']])->limit(1)->one();
+				?>
 					<tr>
 						<td><?= $v['followup_id']; ?></td>
-						<td><?= $v['emp_id']?></td>
-						<td><?= $v['emp_id'];?></td>
+						<td><?= $info2['emp_first_name']?></br><?= $info2['emp_last_name']?></td>
 						<td><?= $v['status'];?></td>
 						<td><?= $v['comments'];?></td>
 						<td><?= $v['stamp'];?></td>
@@ -68,8 +67,7 @@ $info2 = $empinfo::find()->where(['emp_info_id' => $empSession])->limit(1)->one(
 			    <?php echo Html::a(Yii::t('followup', 'Add Follow-up'), ['stufollowupmaster/createfollowup'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
 			<?php } ?>
 		</div>
-	</div>	
-	
-
+	</div>
+</div>
 </div>
 

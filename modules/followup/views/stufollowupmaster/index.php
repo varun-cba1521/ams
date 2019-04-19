@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php $empSession = Yii::$app->session->get('emp_id'); ?>
 
-<<div class="row">
+<div class="row">
 <div class="col-md-12">
 	<div class="box box-warning">
 		<div class="box-header with-border">
