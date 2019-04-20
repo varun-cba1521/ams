@@ -61,6 +61,7 @@ use yii\web\UploadedFile;
 use app\modules\employee\models\EmpDocs;
 use yii\bootstrap\Modal;
 use app\models\StuFollowup2;
+use app\models\CounselInfo;
 
 class EmpMasterController extends Controller
 {
@@ -102,6 +103,7 @@ class EmpMasterController extends Controller
         $model = $this->findModel($id);
         $info = EmpInfo::findOne($model->emp_master_emp_info_id);
 		$followup = new StuFollowup2();
+		$counselinfo = new CounselInfo();
 		$empinfo = new EmpInfo();
         $address = EmpAddress::findOne($model->emp_master_emp_address_id);
         $emp_docs = new EmpDocs();
@@ -114,6 +116,7 @@ class EmpMasterController extends Controller
 			'followup' => $followup,
 			'empinfo' => $empinfo,
 			'empid' => $id,
+			'counselinfo' => $counselinfo,
         ]);
     }
 

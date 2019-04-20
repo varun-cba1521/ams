@@ -126,9 +126,7 @@ $this->registerJs(
                             <div class="small-box bg-yellow">
                                 <div class="inner">
                                     <h3>
-                                        <!-- <?= app\modules\course\models\Courses::find()->where(['is_status' => 0])->count(); ?> -->
-										<?php $val1=0 ?>
-										<?= $val1 ?>
+                                        <?= app\models\CounselInfo::find()->where(['emp_id' => $empSession])->count(); ?>
                                     </h3>
                                     <p>
                                         <?php echo Yii::t('app', 'Counseling Sessions') ?>
@@ -137,7 +135,7 @@ $this->registerJs(
                                 <div class="icon">
                                     <i class="fa fa-graduation-cap"></i>
                                 </div>
-				<?= Html::a(Yii::t('app', 'More info').' <i class="fa fa-arrow-circle-right"></i>', ['/followup/stufollowupmaster/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+				<?= Html::a(Yii::t('app', 'More info').' <i class="fa fa-arrow-circle-right"></i>', ['counsel/view'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
                             </div>
                         </div><!-- ./col -->
                         <div class="col-lg-3 col-xs-6">
