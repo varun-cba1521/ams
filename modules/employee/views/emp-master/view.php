@@ -95,6 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<li id = "academic-tab"><a href="#otherinfo" data-toggle="tab"><i class="fa fa-cogs"></i>
  <?php echo Yii::t('emp', 'Other Info'); ?></a></li>
 			<li id = "documents-tab"><a href="#documents" data-toggle="tab"><i class="fa fa-file-text"></i> <?php echo Yii::t('emp', 'Documents'); ?></a></li>
+			<li id = "address-tab"><a href="#followup" data-toggle="tab"><i class="fa fa-user"></i> <?php echo Yii::t('followup', 'Follow-Up'); ?></a></li>
 		</ul>
 		 <div id='content' class="tab-content responsive">
 			<div class="tab-pane active" id="personal">
@@ -111,6 +112,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			</div>
 			<div class="tab-pane" id="documents">
 				<?= $this->render('_tab_emp_documents', ['emp_docs' => $emp_docs, 'model'=>$model]) ?>	
+			</div>
+			<div class="tab-pane" id="followup">
+				<?= $this->render('_tab_emp_followup', ['followup' => $followup, 'empid' => $empid, 'empinfo' => $empinfo]) ?>	
 			</div>
 		</div>
 	</div>

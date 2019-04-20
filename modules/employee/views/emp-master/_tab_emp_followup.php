@@ -7,7 +7,7 @@ $adminUser = array_keys(\Yii::$app->authManager->getRolesByUser(Yii::$app->user-
 <div class="row">
   <div class="col-xs-12 col-md-12 col-lg-12">
 	<h2 class="page-header">	
-	<i class="fa fa-info-circle"></i> <?= Html::encode(Yii::t('stu', 'Follow-up Details')) ?>
+	<i class="fa fa-info-circle"></i> <?= Html::encode(Yii::t('emp', 'Follow-up Details')) ?>
 	<div class="<?= (Yii::$app->language == 'ar') ? 'pull-left' : 'pull-right'?>">
 	</div>
 	</h2>
@@ -15,8 +15,7 @@ $adminUser = array_keys(\Yii::$app->authManager->getRolesByUser(Yii::$app->user-
 </div>
 
 <?php
-$empSession = Yii::$app->session->get('emp_id');
-$info1 = $followup::find()->where(['student_id' => $stuid])->orderBy('stamp DESC')->all();
+$info1 = $followup::find()->where(['emp_id' => $empid])->orderBy('stamp DESC')->all();
 ?>
 
 <div class="row">
@@ -60,12 +59,6 @@ $info1 = $followup::find()->where(['student_id' => $stuid])->orderBy('stamp DESC
 				<?php endif; ?>
 				</tbody>
 			</table>
-		</div>
-		<div class="box-footer clearfix">
-			<?php if(Yii::$app->user->can("/followup/stufollowupmaster/createfollowup")) { ?>
-			
-			    <a href="index.php?r=/followup/stufollowupmaster/createfollowupbystudent&id=<?= $stuid?>" class="btn btn-sm btn-info btn-flat pull-left"> Add Follow-up
-			<?php } ?> </a>
 		</div>
 	</div>
 </div>

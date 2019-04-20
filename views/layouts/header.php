@@ -50,8 +50,9 @@ $notifyCount = ($countT + count($eventsList));
 ?>
 <div class="navbar-right">
 
-<form class="navbar-left" style="margin-top:10px; margin-right:20px; position:relative; font-size:15px;" action="stusearch" method="get">
-	<input style="width:810px; height:35px;" name="message" id="message" type="text"/>
+<form class="navbar-left" style="margin-top:10px; margin-right:20px; position:relative; font-size:15px;" action="index.php" method="msg">
+	<input type="hidden" name="r" id="r" value="stusearch/home"/>
+	<input style="width:810px; height:35px;" name="msg" id="msg" type="text"/>
 </form>
 
 <ul class="nav navbar-nav">

@@ -72,7 +72,31 @@ class StuFollowupMasterController extends \yii\web\Controller
 			}
 			
 		}
-        return $this->render('create',['model' => $model]);
+		//$stuid = $_GET['stuid'];
+        return $this->render('create',['model' => $model,]);
+    }
+	
+	public function actionCreatefollowupbystudent($id)
+    {
+		$model = new StuFollowup2();
+		
+		if ($model->load(Yii::$app->request->post())) {
+			if ($model->validate()) {
+				  return $this->render('success',['model' => $model]);
+			}
+			else{
+				if($model->save(false)){
+					return $this->render('index');
+				 }
+				 else{
+					return $this->render('error',['model' => $model]); 
+				 }
+				 
+			}
+			
+		}
+		//$stuid = $_GET['stuid'];
+        return $this->render('create',['model' => $model, 'stuid' => $id]);
     }
 
     /**

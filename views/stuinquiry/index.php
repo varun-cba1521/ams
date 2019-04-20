@@ -16,9 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
-<?php $empSession = Yii::$app->session->get('emp_id'); ?>
-
-<<div class="row">
+<div class="row">
 <div class="col-md-12">
 	<div class="box box-warning">
 		<div class="box-header with-border">
@@ -44,13 +42,13 @@ $this->params['breadcrumbs'][] = $this->title;
 				</thead>
 				<tbody>
 				 <?php
-					$inquiryinfo = app\models\StuFollowup2::find()->where('inquiry_id > 0')->all(); 
+					$inquiryinfo = app\models\StuInquiry::find()->where('inquiry_id > 0')->orderBy('stamp DESC')->all(); 
 				?>
 				<?php if($inquiryinfo) : ?>
 				<?php foreach($inquiryinfo as $v) : ?>
 					<tr>
 						<td><?= $v['inquiry_id']; ?></td>
-						<td><?= $v['stu_name']." ".$info1['stu_last_name']; ?></td>
+						<td><?= $v['stu_name'] ?></td>
 						<td><?= $v['email_id'];?></td>
 						<td><?= $v['mobile_no'];?></td>
 						<td><?= $v['city'];?></td>
@@ -68,9 +66,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			</table>
 		</div>
 		<div class="box-footer clearfix">
-			<?php if(Yii::$app->user->can("/followup/stufollowupmaster/createfollowup")) { ?>
+			<?php if(Yii::$app->user->can("/stuinquiry/inquiry2")) { ?>
 			
-			    <?php echo Html::a(Yii::t('followup', 'Add Follow-up'), ['stufollowupmaster/createfollowup'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
+			    <?php echo Html::a(Yii::t('followup', 'Add Follow-up'), ['/stuinquiry/inquiry2'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
 			<?php } ?>
 		</div>
 	</div>	

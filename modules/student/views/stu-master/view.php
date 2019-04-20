@@ -60,8 +60,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<td><?= Html::encode($this->title) ?></td>
 			</tr>
 			<tr>
-				<th><?php echo Yii::t('stu', 'Batch'); ?></th>
-				<td><?= $model->stuMasterBatch->batch_name; ?></td>
+				<th><?php echo Yii::t('stu', 'Course'); ?></th>
+				<td><?= $model->stuMasterCourse->course_alias ?></td>
 			</tr>
 			<tr>
 				<th><?= $info->getAttributeLabel('stu_email_id') ?></th>

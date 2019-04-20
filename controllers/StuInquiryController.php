@@ -9,7 +9,12 @@ use app\models\StuInquiry;
 
 class StuInquiryController extends \yii\web\Controller
 {
-    public function actionInquiry2()
+    public function actionIndex()
+    {
+        return $this->render('index');
+    }
+	
+	public function actionInquiry2()
     {
 		$model = new StuInquiry();
 		

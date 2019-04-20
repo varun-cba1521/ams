@@ -120,7 +120,7 @@ $this->registerJs(
                                 <div class="inner">
                                     <h3>
                                         <!-- <?= app\modules\course\models\Courses::find()->where(['is_status' => 0])->count(); ?> -->
-										<?php $val1=7 ?>
+										<?php $val1=0 ?>
 										<?= $val1 ?>
                                     </h3>
                                     <p>

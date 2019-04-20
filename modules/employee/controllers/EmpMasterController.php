@@ -60,6 +60,7 @@ use kartik\widgets\Select2;
 use yii\web\UploadedFile;
 use app\modules\employee\models\EmpDocs;
 use yii\bootstrap\Modal;
+use app\models\StuFollowup2;
 
 class EmpMasterController extends Controller
 {
@@ -100,6 +101,8 @@ class EmpMasterController extends Controller
     {
         $model = $this->findModel($id);
         $info = EmpInfo::findOne($model->emp_master_emp_info_id);
+		$followup = new StuFollowup2();
+		$empinfo = new EmpInfo();
         $address = EmpAddress::findOne($model->emp_master_emp_address_id);
         $emp_docs = new EmpDocs();
 
@@ -108,6 +111,9 @@ class EmpMasterController extends Controller
             'info' => $info,
             'address' => $address,
             'emp_docs' =>$emp_docs,
+			'followup' => $followup,
+			'empinfo' => $empinfo,
+			'empid' => $id,
         ]);
     }
 

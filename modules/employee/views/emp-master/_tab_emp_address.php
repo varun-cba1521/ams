@@ -34,18 +34,39 @@ $role = Yii::$app->AuthManager->getRoles();
 	 <div class="col-md-12 col-xs-12 col-sm-12">
 	  <div class="col-lg-6 col-sm-6 col-xs-12 no-padding">
 		<div class="col-md-6 col-sm-6 col-xs-6 edusec-profile-label edusecArLangCss"><?= $address->getAttributeLabel('emp_cadd_city') ?></div>
-		<div class="col-md-6 col-sm-6 col-xs-6 edusec-profile-text"><?= ($address->emp_cadd_city) ? $address->empCaddCity->city_name : "" ?></div>
+		<?php if($address->empCaddCity) :?>
+			<div class="col-md-6 col-sm-6 col-xs-6 edusec-profile-text"><?= ($address->emp_cadd_city) ? $address->empCaddCity->city_name : "" ?></div>
+		<?php
+		else :?>
+			<div class="col-md-6 col-sm-6 col-xs-6 edusec-profile-text"><?= (0) ? $address->empCaddCity->city_name : "" ?></div>
+		<?php
+		endif;
+		?>
 	  </div>
 	  <div class="col-lg-6 col-sm-6 col-xs-12 no-padding">
 		<div class="col-md-6 col-xs-6 edusec-profile-label edusecArLangCss"><?= $address->getAttributeLabel('emp_cadd_state') ?></div>
-		<div class="col-md-6 col-xs-6 edusec-profile-text"><?= ($address->emp_cadd_state) ? $address->empCaddState->state_name : "" ?></div>
+		<?php if($address->empCaddState) :?>
+			<div class="col-md-6 col-xs-6 edusec-profile-text"><?= ($address->emp_cadd_state) ? $address->empCaddState->state_name : "" ?></div>
+		<?php
+		else :?>
+			<div class="col-md-6 col-xs-6 edusec-profile-text"><?= (0) ? $address->empCaddState->state_name : "" ?></div>
+		<?php
+		endif;
+		?>
 	  </div>
 	</div>
 
 	<div class="col-md-12 col-xs-12 col-sm-12">
 	  <div class="col-lg-6 col-sm-6 col-xs-12 no-padding">
 		<div class="col-lg-6 col-xs-6 edusec-profile-label edusecArLangCss"><?= $address->getAttributeLabel('emp_cadd_country') ?></div>
-		<div class="col-lg-6 col-xs-6 edusec-profile-text"><?= ($address->emp_cadd_country) ? $address->empCaddCountry->country_name : "" ?></div>
+		<?php if($address->empCaddCountry) :?>
+			<div class="col-lg-6 col-xs-6 edusec-profile-text"><?= ($address->emp_cadd_country) ? $address->empCaddCountry->country_name : "" ?></div>
+		<?php
+		else :?>
+			<div class="col-lg-6 col-xs-6 edusec-profile-text"><?= (0) ? $address->empCaddCountry->country_name : "" ?></div>
+		<?php
+		endif;
+		?>
 	  </div>
 	  <div class="col-lg-6 col-sm-6 col-xs-12 no-padding">
 		<div class="col-lg-6 col-xs-6 edusec-profile-label edusecArLangCss"><?= $address->getAttributeLabel('emp_cadd_house_no') ?></div>
@@ -90,14 +111,28 @@ $role = Yii::$app->AuthManager->getRoles();
 	  </div>
 	  <div class="col-lg-6 col-sm-6 col-xs-12 no-padding">
 		<div class="col-lg-6 col-xs-6 edusec-profile-label edusecArLangCss"><?= $address->getAttributeLabel('emp_padd_state') ?></div>
-		<div class="col-lg-6 col-xs-6 edusec-profile-text"><?= ($address->emp_padd_state) ? $address->empPaddState->state_name : "" ?></div>
+		<?php if($address->empPaddState) :?>
+			<div class="col-lg-6 col-xs-6 edusec-profile-text"><?= ($address->emp_padd_state) ? $address->empPaddState->state_name : "" ?></div>
+		<?php
+		else :?>
+			<div class="col-lg-6 col-xs-6 edusec-profile-text"><?= (0) ? $address->empPaddState->state_name : "" ?></div>
+		<?php
+		endif;
+		?>	
 	  </div>
 	</div>
 
 	<div class="col-md-12 col-xs-12 col-sm-12">
 	  <div class="col-lg-6 col-sm-6 col-xs-12 no-padding">
 		<div class="col-lg-6 col-xs-6 edusec-profile-label edusecArLangCss"><?= $address->getAttributeLabel('emp_padd_country') ?></div>
-		<div class="col-lg-6 col-xs-6 edusec-profile-text"><?= ($address->emp_padd_country) ? $address->empPaddCountry->country_name : "" ?></div>
+		<?php if($address->empPaddCountry) :?>
+			<div class="col-lg-6 col-xs-6 edusec-profile-text"><?= ($address->emp_padd_country) ? $address->empPaddCountry->country_name : "" ?></div>
+		<?php
+		else :?>
+			<div class="col-lg-6 col-xs-6 edusec-profile-text"><?= (0) ? $address->empPaddCountry->country_name : "" ?></div>
+		<?php
+		endif;
+		?>	
 	  </div>
 	  <div class="col-lg-6 col-sm-6 col-xs-12 no-padding">
 		<div class="col-lg-6 col-xs-6 edusec-profile-label edusecArLangCss"><?= $address->getAttributeLabel('emp_padd_house_no') ?></div>

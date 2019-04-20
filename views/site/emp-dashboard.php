@@ -127,7 +127,7 @@ $this->registerJs(
                                 <div class="inner">
                                     <h3>
                                         <!-- <?= app\modules\course\models\Courses::find()->where(['is_status' => 0])->count(); ?> -->
-										<?php $val1=7 ?>
+										<?php $val1=0 ?>
 										<?= $val1 ?>
                                     </h3>
                                     <p>
@@ -154,7 +154,7 @@ $this->registerJs(
                                 <div class="icon">
                                     <i class="fa fa-sitemap"></i>
                                 </div>
-                                <?= Html::a(Yii::t('app', 'More info').' <i class="fa fa-arrow-circle-right"></i>', ['/student/stu-master/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                                <?= Html::a(Yii::t('app', 'More info').' <i class="fa fa-arrow-circle-right"></i>', ['/stuinquiry/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
                             </div>
                         </div><!-- ./col -->
                     </div><!-- /.row -->
