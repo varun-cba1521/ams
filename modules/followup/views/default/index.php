@@ -76,10 +76,14 @@ $this->registerJs(
                                     <h3>
 									<?php
 									if($empSession == null || $empSession == ''){
-										echo app\models\StuFollowup2::find()->where(['finder' => 0])->count();
+										$getcount = new Query();
+										$getcount->select('*')->from('stu_followup_2 f')->join('join','stu_info s','s.stu_info_id = f.student_id')->groupBy('f.student_id')->having(['finder' => 0])->createCommand()->queryAll();
+										echo $getcount->count();
 									}
 									else{
-										echo app\models\StuFollowup2::find()->where(['emp_id' => $empSession])->count();
+										$getcount = new yii\db\Query();
+										$getcount->select('*')->from('stu_followup_2 f')->join('join','stu_info s','s.stu_info_id = f.student_id and f.emp_id = :id',array(':id' => $empSession))->groupBy('f.student_id')->having(['finder' => 0])->createCommand()->queryAll();
+										echo $getcount->count();
 									}
 									?>
 									
@@ -101,10 +105,14 @@ $this->registerJs(
                                     <h3>
 									   <?php
 									if($empSession == null || $empSession == ''){
-										echo app\models\StuFollowup2::find()->where(['pending' => 0])->count();
+										$getcount = new Query();
+										$getcount->select('*')->from('stu_followup_2 f')->join('join','stu_info s','s.stu_info_id = f.student_id')->groupBy('f.student_id')->having(['pending' => 0])->createCommand()->queryAll();
+										echo $getcount->count();
 									}
 									else{
-										echo app\models\StuFollowup2::find()->where(['emp_id' => $empSession])->andWhere(['pending' => 0])->count();
+										$getcount = new yii\db\Query();
+										$getcount->select('*')->from('stu_followup_2 f')->join('join','stu_info s','s.stu_info_id = f.student_id and f.emp_id = :id',array(':id' => $empSession))->groupBy('f.student_id')->having(['pending' => 0])->createCommand()->queryAll();
+										echo $getcount->count();
 									}
 									?>
                                     </h3>
@@ -123,9 +131,7 @@ $this->registerJs(
                             <div class="small-box bg-yellow">
                                 <div class="inner">
                                     <h3>
-                                        <!-- <?= app\modules\course\models\Courses::find()->where(['is_status' => 0])->count(); ?> -->
-										<?php $val1=7 ?>
-										<?= $val1 ?>
+                                        <?= app\models\CounselInfo::find()->where(['emp_id' => $empSession])->count(); ?>
                                     </h3>
                                     <p>
                                         <?php echo Yii::t('app', 'Counseling Sessions') ?>
@@ -142,9 +148,7 @@ $this->registerJs(
                             <div class="small-box bg-green">
                                 <div class="inner">
                                     <h3>
-                                        <!-- <?= app\modules\course\models\Batches::find()->where(['is_status' => 0])->count(); ?> -->
-										<?php $val1=69 ?>
-										<?= $val1 ?>
+                                        <?= app\models\StuInquiry::find()->where('inquiry_id > 0')->count(); ?>
                                     </h3>
                                     <p>
                                         <?php echo Yii::t('app', 'Total Enquiries') ?>
@@ -189,13 +193,13 @@ $this->registerJs(
 				<tbody>
 				  <?php
 					if($empSession == null || $empSession == ''){
-						$followupinfo = app\models\StuFollowup2::find()->where(['finder' => 0])->limit(3)->all(); 
+						$followupinfo = app\models\StuFollowup2::find()->where(['finder' => 0])->limit(5)->all(); 
 					}
 					else{
-						$followupinfo = app\models\StuFollowup2::find()->where(['emp_id' => $empSession])->limit(3)->all(); 
+						$followupinfo = app\models\StuFollowup2::find()->where(['emp_id' => $empSession])->orderBy('stamp DESC')->limit(5)->all(); 
 					}
 				?>
-				<?php $ury = app\models\StuFollowup2::findBySql('select DISTINCT * from stu_info s, stu_followup f where s.stu_info_id=f.student_id')->all();
+				<?php $ury = app\models\StuFollowup2::findBySql('select DISTINCT * from stu_info s, stu_followup_2 f where s.stu_info_id=f.student_id')->all();
 				?>
 				<?php $stuinfo = app\modules\student\models\StuInfo::findBySql('Select * from stu_info')->all(); ?>
 				<?php if($followupinfo) : ?>

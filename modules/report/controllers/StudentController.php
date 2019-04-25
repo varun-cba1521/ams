@@ -83,7 +83,8 @@ class StudentController extends Controller
                 ->andFilterWhere(['stu.stu_master_batch_id' => $model->report_batch_id])
                 ->andFilterWhere(['stu.stu_master_section_id' => $model->report_section_id])
                 ->andFilterWhere(['add.stu_cadd_city' => $model->report_city])
-                ->andFilterWhere(['s_info.stu_gender' => $info->stu_gender]);
+                ->andFilterWhere(['s_info.stu_gender' => $info->stu_gender])
+				->andFilterWhere(['stu.stu_master_stu_status_id' => $model->report_status]);
 
     		$command=$query1->createCommand();
     		$student_data=$command->queryAll();
@@ -97,6 +98,7 @@ class StudentController extends Controller
     	return $this->render('stu_info_report',[
     		'student_data'=>$student_data,
             'selected_list'=>$selected_list,
+			'model' => $model,
     	]);
 
     	} else if(Yii::$app->request->get('exportExcel')) {

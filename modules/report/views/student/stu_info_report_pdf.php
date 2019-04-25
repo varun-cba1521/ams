@@ -24,10 +24,10 @@ if(!empty($student_data))
 	$i = 1;
 	$add_c = $add_s =$add_city = $add_co = $add_city_c = '';
 	$student_info = new StuInfo();
-	echo "</br></br><h1>".Yii::t('report', 'Students List')."</h1>";	
+	echo "</br></br><h2>".Yii::t('report', 'Students List')."</h2>";	
 	foreach($student_data as $t=>$sd)
 	{ 	
-		echo "<h3>".$sd['stu_first_name']." ".$sd['stu_last_name']."</h3>";
+		echo "<h4>".$sd['stu_first_name']." ".$sd['stu_last_name']."</h4>";
 		echo "<table>";
 		
 		echo '<tr >';

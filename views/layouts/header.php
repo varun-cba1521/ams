@@ -48,11 +48,26 @@ $countT = ((!Yii::$app->session->get('stu_id') && !Yii::$app->session->get('emp_
 $notifyCount = ($countT + count($eventsList));
 
 ?>
+
+<?php
+if($this->title == "Search Students"){
+	if(Yii::$app->session->get('search_msg')){
+		$v = Yii::$app->session->get('search_msg');
+	}
+	else{
+		$v = "";
+	}
+}
+else{
+	$v = "";
+}
+?>
+
 <div class="navbar-right">
 
-<form class="navbar-left" style="margin-top:10px; margin-right:20px; position:relative; font-size:15px;" action="index.php" method="msg">
+<form class="navbar-left" style="margin-top:10px; margin-right:20px; position:relative; font-size:15px;" action="index.php" method="get" id="search_form">
 	<input type="hidden" name="r" id="r" value="stusearch/home"/>
-	<input style="width:810px; height:35px;" name="msg" id="msg" type="text"/>
+	<input style="width:810px; height:35px;" name="msg" id="msg" value="<?= $v?>" placeholder="Search Here" type="text"/>
 </form>
 
 <ul class="nav navbar-nav">

@@ -5,7 +5,6 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 
 $this->title = Yii::t('app','Search Students');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Form'), 'url' => ['search']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="stu-address-create">

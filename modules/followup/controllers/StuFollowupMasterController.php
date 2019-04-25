@@ -9,6 +9,7 @@ use Yii;
 // use app\modules\student\models\StuAddress;
 // use app\modules\student\models\StuDocs;
 // use app\modules\student\models\StuMasterSearch;
+use app\modules\student\models\StuStatus;
 
 use app\modules\followup\models\StuFollowup2;
 use app\modules\followup\models\StuMaster;
@@ -63,6 +64,10 @@ class StuFollowupMasterController extends \yii\web\Controller
 			}
 			else{
 				if($model->save(false)){
+					$state = $model->status;
+					$info = StuStatus::find()->where(['stu_status_name' => $state])->One();
+					$update = StuMaster::updateAll(['stu_master_stu_status_id' => $info->stu_status_id],['stu_master_id' => $model->student_id]);
+					
 					return $this->render('index');
 				 }
 				 else{
@@ -86,6 +91,10 @@ class StuFollowupMasterController extends \yii\web\Controller
 			}
 			else{
 				if($model->save(false)){
+					$state = $model->status;
+					$info = StuStatus::find()->where(['stu_status_name' => $state])->One();
+					$update = StuMaster::updateAll(['stu_master_stu_status_id' => $info->stu_status_id],['stu_master_id' => $model->student_id]);
+					
 					return $this->render('index');
 				 }
 				 else{

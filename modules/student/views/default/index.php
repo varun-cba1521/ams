@@ -160,12 +160,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				</thead>
 				<tbody>
 				<?php
-				$uri = app\modules\student\models\StuInfo::findBySql('Select * from stu_info')->all();
+				$uri = app\modules\student\models\StuInfo::findBySql('Select * from stu_info order by stu_info_id desc limit 10')->all();
 				if($uri) : ?>
 				<?php foreach($uri as $k=>$v) : ?>
 					<tr>
-						<td><?= ($k+1); ?></td>
-						<td><?= Html::a($v['stu_first_name'].$v['stu_last_name'], ['stu-master/view', 'id'=>$v['stu_info_stu_master_id']]);?></td>
+						<td><?= $v['stu_info_id']; ?></td>
+						<td><?= Html::a($v['stu_first_name']." ".$v['stu_last_name'], ['stu-master/view', 'id'=>$v['stu_info_stu_master_id']]);?></td>
 						<td><?= $v['stu_email_id'];?></td>
 						<td><?= $v['stu_mobile_no'];?></td>
 						<td><?= $v['stu_birthplace'];?></td>
@@ -186,8 +186,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			<?php echo Html::a(Yii::t('stu', 'View All Students'), ['stu-master/index'], ['class'=>'btn btn-sm btn-default btn-flat pull-right']); ?>
 			<br/><br/>
 			<?= Html::a(Yii::t('app', 'Inquire'), ['/stuinquiry/inquiry2'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
-			<br/><br/>
-			<?= Html::a(Yii::t('app', 'Search'), ['/stusearch/index'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
 		</div>
 	</div>	
 	

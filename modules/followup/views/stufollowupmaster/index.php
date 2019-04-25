@@ -112,7 +112,7 @@ $empSession = Yii::$app->session->get('emp_id'); ?>
 						}
 						else{
 							//$followupinfo = app\models\StuFollowup2::find()->where(['created_by' => $empSession])->all(); 
-							$followupinfo = app\models\StuFollowup2::findBySql('select *, count(*) as rn from stu_followup_2 f JOIN stu_info s on f.student_id = s.stu_info_id group by f.student_id')->all(); 
+							$followupinfo = app\models\StuFollowup2::findBySql('select *, count(*) as rn from stu_followup_2 f JOIN stu_info s on f.student_id = s.stu_info_id and f.emp_id = '.$empSession.' group by f.student_id')->all(); 
 						}
 					?>
 					<?php $ury = app\models\StuFollowup2::findBySql('select DISTINCT * from stu_info s, stu_followup f where s.stu_info_id=f.student_id')->all();
@@ -164,6 +164,8 @@ $empSession = Yii::$app->session->get('emp_id'); ?>
 				<?php if(Yii::$app->user->can("/followup/stufollowupmaster/createfollowup")) { ?>
 				
 					<?php echo Html::a(Yii::t('followup', 'Add Follow-up'), ['stufollowupmaster/createfollowup'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
+					<br/><br/>
+					<?php echo Html::a(Yii::t('app', 'Send Remainder'), ['/mail/remainder'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
 				<?php } ?>
 			</div>
 		</div>	

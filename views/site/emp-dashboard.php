@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\db\Query;
 
 $this->title = Yii::t('app', 'Employee Dashboard');
 $this->params['breadcrumbs'][] = $this->title;
@@ -90,9 +91,12 @@ $this->registerJs(
                             <div class="small-box bg-aqua">
                                 <div class="inner">
                                     <h3>
-									
-                                    <?= app\models\StuFollowup2::find()->where(['emp_id' => $empSession])->count(); ?>
-									
+									<?php
+									$getcount = new Query();
+									$getcount->select('*')->from('stu_followup_2 f')->join('join','stu_info s','s.stu_info_id = f.student_id and f.emp_id = :id',array(':id' => $empSession))->groupBy('f.student_id')->having(['finder' => 0])->createCommand()->queryAll();
+									$total_count = $getcount->count();
+									?>
+                                       <?= $total_count; ?>
                                     </h3>
                                     <p>
                                         <?php echo Yii::t('app', 'Total Follow-ups') ?>
@@ -109,7 +113,12 @@ $this->registerJs(
                             <div class="small-box bg-red">
                                 <div class="inner">
                                     <h3>
-                                       <?= app\models\StuFollowup2::find()->where(['emp_id' => $empSession])->andWhere(['pending' => 0])->count(); ?>
+									<?php
+									$getcount = new Query();
+									$getcount->select('*')->from('stu_followup_2 f')->join('join','stu_info s','s.stu_info_id = f.student_id and f.emp_id = :id',array(':id' => $empSession))->groupBy('f.student_id')->having(['pending' => 0])->createCommand()->queryAll();
+									$pending_count = $getcount->count();
+									?>
+                                       <?= $pending_count; ?>
                                     </h3>
                                     <p>
                                         <?php echo Yii::t('app', 'Pending Follow-ups') ?>

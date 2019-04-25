@@ -5,15 +5,15 @@ use yii\helpers\Html;
 	<?= Html::a('<i class="fa fa-users"></i> <span>'.Yii::t('followup', 'Follow-up').'</span> <i class="fa fa-angle-left pull-right"></i>', ['/student/default/index'])  ?>
         <ul class="treeview-menu">
 
-	<?php if(Yii::$app->user->can('/student/stu-master/create')) : ?>
+	<?php if(Yii::$app->user->can('/followup/stufollowupmaster/createfollowup')) : ?>
             <li>
-		<?= Html::a('<i class="fa fa-angle-double-right"></i> '.Yii::t('stu', 'Add Student'),['/student/stu-master/create'])  ?>
+		<?= Html::a('<i class="fa fa-angle-double-right"></i> '.Yii::t('followup', 'Add Follow-up'),['/followup/stufollowupmaster/createfollowup'])  ?>
 	    </li>
 	<?php endif; ?> 
-
-	<?php if(Yii::$app->user->can('/student/stu-master/index')) : ?>
+	
+	<?php if(Yii::$app->user->can('/followup/stufollowupmaster/index')) : ?>
 	    <li>
-		<?= Html::a('<i class="fa fa-angle-double-right"></i> '.Yii::t('stu', 'Manage Students'),['/student/stu-master/index'])  ?>
+		<?= Html::a('<i class="fa fa-angle-double-right"></i> '.Yii::t('stu', 'Manage Follow-ups'),['/followup/stufollowupmaster/index'])  ?>
 	    </li>
 	<?php endif; ?> 
 

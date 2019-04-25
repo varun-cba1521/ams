@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use yii\jui\DatePicker;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\followup\models\StuFollowup */
@@ -15,8 +18,8 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'student_id') ?>
 		<?= $form->field($model, 'emp_id')->textInput(['readonly' => true]) ?>
 		<?= $form->field($model, 'created_by')->textInput(['readonly' => true]) ?>
-        <?= $form->field($model, 'status') ?>
-        <?= $form->field($model, 'pending')->hint('Type 0 for Yes & 1 for No') ?>
+		<?= $form->field($model, 'status')->dropDownList(ArrayHelper::map(app\modules\student\models\StuStatus::find()->where(['is_status' => 0])->all(),'stu_status_name','stu_status_description'),['prompt'=>Yii::t('stu', '---  Select Status ---')]); ?>
+		<?= $form->field($model, 'pending')->radioList(array(0=>'Yes',1=>'No')); ?>
         <?= $form->field($model, 'stamp') ?>
         <?= $form->field($model, 'comments')->textarea(['rows' => 6]) ?>
     

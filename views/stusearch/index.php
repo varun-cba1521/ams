@@ -10,27 +10,14 @@ use yii\web\JsExpression;
 /* @var $form ActiveForm */
 
 use app\modules\student\models\StuInfo;
+
+
 ?>
-
-<div class="inquiry">
-<div class = "row">
-   <div class = "col-lg-5">
-
-    <?php $form = ActiveForm::begin(['id' => 'search-form']); ?>
-
-        <?= $form->field($model, 'search_term') ?>
-    
-        <div class="form-group">
-            <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
-        </div>
-    <?php ActiveForm::end(); ?>
-	</div>
-</div>
-
-</div><!-- inquiry -->
 
 <?php
 $data = $model->search_term;
+Yii::$app->session->set('search_msg',$data);
+
 if($data){
 	$uri = app\modules\student\models\StuInfo::find()->where(['stu_info_id' => $data])->orWhere(['like','stu_first_name',$data])->orWhere(['like','stu_last_name',$data])->orWhere(['like','stu_birthplace',$data])->orWhere(['like','stu_mobile_no',$data])->all();
 	
@@ -89,7 +76,16 @@ if($data){
 	</div>	
 </div>
 </div>
-	<?php } ?>
+	<?php }
+	else{ ?>
+		<div class="box-footer clearfix">
+			<?php if(Yii::$app->user->can("/student/stu-master/create")) { ?>
+			    <?php echo Html::a(Yii::t('stu', 'Add Student'), ['stu-master/create'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
+			<?php } ?>
+		</div>
+		<br/><br/>
+	<?php }
+	?>
 	
 	<?php if($empinfo){ ?>
 		

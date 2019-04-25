@@ -19,6 +19,9 @@ $model->emp_id = $empSession;
 if(isset($stuid)){
 	$model->student_id = $stuid;
 }
+elseif(isset($id)){
+	$model->student_id = $id;
+}
 else{
 	$stuid = 0;
 	//$model->student_id = $stuid;
