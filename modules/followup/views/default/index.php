@@ -110,9 +110,13 @@ $this->registerJs(
 										echo $getcount->count();
 									}
 									else{
+										$getcount = app\models\StuFollowup2::findBySql('select * from stu_followup_2 where followup_id in (select max(followup_id) from stu_followup_2 group by student_id having emp_id='.$empSession.' and pending=0)')->all();
+										/* 
 										$getcount = new yii\db\Query();
+										$getcoun->select('*')->from('stu_followup_2')->
 										$getcount->select('*')->from('stu_followup_2 f')->join('join','stu_info s','s.stu_info_id = f.student_id and f.emp_id = :id',array(':id' => $empSession))->groupBy('f.student_id')->having(['pending' => 0])->createCommand()->queryAll();
-										echo $getcount->count();
+										 */
+										echo count($getcount);
 									}
 									?>
                                     </h3>
@@ -198,12 +202,8 @@ $this->registerJs(
 					else{
 						$followupinfo = app\models\StuFollowup2::find()->where(['emp_id' => $empSession])->orderBy('stamp DESC')->limit(5)->all(); 
 					}
-				?>
-				<?php $ury = app\models\StuFollowup2::findBySql('select DISTINCT * from stu_info s, stu_followup_2 f where s.stu_info_id=f.student_id')->all();
-				?>
-				<?php $stuinfo = app\modules\student\models\StuInfo::findBySql('Select * from stu_info')->all(); ?>
-				<?php if($followupinfo) : ?>
-				<?php foreach($followupinfo as $v) : ?>
+				if($followupinfo) :
+					foreach($followupinfo as $v) : ?>
 					<tr>
 					<?php $info1 = app\modules\student\models\StuInfo::find()->where(['stu_info_id' => $v['student_id']])->limit(1)->one();?>
 						<td><?= $info1['stu_first_name']." ".$info1['stu_last_name']; ?></td>

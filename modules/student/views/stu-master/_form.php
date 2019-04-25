@@ -128,7 +128,7 @@ $(function () {
                                 $( "#'.Html::getInputId($model, 'stu_master_batch_id').'" ).html( data );
                             }
                         );
-                    '    
+                    '
                 ]); ?>
     </div>
 

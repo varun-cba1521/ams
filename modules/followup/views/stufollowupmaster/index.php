@@ -6,6 +6,7 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
+use yii\db\Query;
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\followup\models\StuMasterSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -35,15 +36,18 @@ if(Yii::$app->user->can('Rights')){
 						<tr>
 							<th><?php echo Yii::t('followup', 'Sr.No'); ?></th>
 							<th><?php echo Yii::t('followup', 'Faculty Name'); ?></th>
-							<th><?php echo Yii::t('followup', 'Total Follow-ups'); ?></th>
-							<th><?php echo Yii::t('followup', 'Pending Follow-ups'); ?></th>
+							<th><?php echo Yii::t('followup', 'Total'); ?></th>
+							<th><?php echo Yii::t('followup', 'Pending'); ?></th>
+							<th><?php echo Yii::t('followup', 'Email ID'); ?></th>
+							<th><?php echo Yii::t('followup', 'Mobile No.'); ?></th>
+							<th><?php echo Yii::t('followup', 'Experience'); ?></th>
+							
 						</tr>
 					</thead>
 					<tbody>
 					<?php
 					$followupinfo = app\models\StuFollowup2::find()->where(['finder' => 0])->all(); 
 					$empinfo = app\modules\employee\models\EmpInfo::find()->where('emp_info_id > 0')->orderBy('emp_first_name')->all();
-					$ury = app\models\StuFollowup2::findBySql('select DISTINCT * from stu_info s, stu_followup f where s.stu_info_id=f.student_id')->all();
 					?>
 					<?php if($empinfo) : ?>
 					<?php foreach($empinfo as $v) : 
@@ -51,9 +55,19 @@ if(Yii::$app->user->can('Rights')){
 					?>
 					<tr>
 						<td><?= $v['emp_info_id']; ?></td>
-						<td><a href="index.php?r=employee/emp-master/view&id=<?= $v['emp_info_id']?>"><?= $v['emp_first_name']." ".$v['emp_middle_name']." ".$v['emp_last_name']?></a></td>
-						<td><?= app\models\StuFollowup2::find()->where(['emp_id' => $v['emp_info_id']])->count()?></td>
-						<td><?= app\models\StuFollowup2::find()->where(['emp_id' => $v['emp_info_id']])->andWhere(['pending' => 0])->count()?></td>
+						<td><a href="index.php?r=employee/emp-master/view&id=<?= $v['emp_info_id']?>"><?= $v['emp_title']." ".$v['emp_first_name']." ".$v['emp_middle_name']." ".$v['emp_last_name']?></a></td>
+						<td><?php
+						$getcount = new Query();
+						$getcount->select('*')->from('stu_followup_2 f')->join('join','stu_info s','s.stu_info_id = f.student_id and f.emp_id = :id',array(':id' => $v['emp_info_id']))->groupBy('f.student_id')->having(['finder' => 0])->createCommand()->queryAll();
+						echo $getcount->count();
+						?></td>
+						<td><?php
+						$getcount = app\models\StuFollowup2::findBySql('select * from stu_followup_2 where followup_id in (select max(followup_id) from stu_followup_2 group by student_id having pending=0 and emp_id='.$v['emp_info_id'].')')->all();
+						echo count($getcount);
+						?></td>
+						<td><?= $v['emp_email_id']?></td>
+						<td><?= $v['emp_mobile_no']?></td>
+						<td><?= $v['emp_experience_year']." year(s)"?></td>
 					</tr>
 					<?php endforeach; ?>
 					<?php else : ?>
@@ -112,14 +126,10 @@ $empSession = Yii::$app->session->get('emp_id'); ?>
 						}
 						else{
 							//$followupinfo = app\models\StuFollowup2::find()->where(['created_by' => $empSession])->all(); 
-							$followupinfo = app\models\StuFollowup2::findBySql('select *, count(*) as rn from stu_followup_2 f JOIN stu_info s on f.student_id = s.stu_info_id and f.emp_id = '.$empSession.' group by f.student_id')->all(); 
+							$followupinfo = app\models\StuFollowup2::findBySql('select * from stu_followup_2 where followup_id in (select max(followup_id) from stu_followup_2 group by student_id having emp_id='.$empSession.') order by stamp desc')->all(); 
 						}
-					?>
-					<?php $ury = app\models\StuFollowup2::findBySql('select DISTINCT * from stu_info s, stu_followup f where s.stu_info_id=f.student_id')->all();
-					?>
-					<?php $stuinfo = app\modules\student\models\StuInfo::findBySql('Select * from stu_info')->all(); ?>
-					<?php if($followupinfo) : ?>
-					<?php foreach($followupinfo as $v) : ?>
+					if($followupinfo) :
+						foreach($followupinfo as $v) : ?>
 						<tr>
 						<?php
 						$info1 = app\modules\student\models\StuInfo::find()->where(['stu_info_id' => $v['student_id']])->limit(1)->one();

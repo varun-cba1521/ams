@@ -47,6 +47,7 @@ INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 ('Student', '18', 1432723142),
 ('Student', '2', 1432721814),
 ('Student', '3', 1432721957),
+('Student', '35', 1556045111),
 ('Student', '5', 1432722136),
 ('Student', '6', 1432722271),
 ('Student', '7', 1432722395),
@@ -88,6 +89,8 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/city/index', 2, '/city/index', NULL, NULL, 1432554652, 1432554652),
 ('/city/update', 2, '/city/update', NULL, NULL, 1432554652, 1432554652),
 ('/city/view', 2, '/city/view', NULL, NULL, 1432554652, 1432554652),
+('/counsel/index', 2, '/counsel/index', NULL, NULL, 1432554657, 1432554657),
+('/counsel/view', 2, '/counsel/view', NULL, NULL, 1432554657, 1432554657),
 ('/country/*', 2, '/country/*', NULL, NULL, 1432554653, 1432554653),
 ('/country/create', 2, '/country/create', NULL, NULL, 1432554652, 1432554652),
 ('/country/delete', 2, '/country/delete', NULL, NULL, 1432554653, 1432554653),
@@ -273,6 +276,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/followup/stu-master/index', 2, '/followup/stu-master/index', NULL, NULL, 1432554641, 1432554641),
 ('/followup/stufollowupmaster/*', 2, '/followup/stufollowupmaster/*', NULL, NULL, 1432554657, 1432554657),
 ('/followup/stufollowupmaster/createfollowup', 2, '/followup/stufollowupmaster/createfollowup', NULL, NULL, 1432554651, 1432554651),
+('/followup/stufollowupmaster/index', 2, '/followup/stufollowupmaster/index', NULL, NULL, 1432554652, 1432554652),
 ('/gii/*', 2, '/gii/*', NULL, NULL, 1432554652, 1432554652),
 ('/gii/default/*', 2, '/gii/default/*', NULL, NULL, 1432554652, 1432554652),
 ('/gii/default/action', 2, '/gii/default/action', NULL, NULL, 1432554652, 1432554652),
@@ -299,6 +303,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/login-details/index', 2, '/login-details/index', NULL, NULL, 1432554654, 1432554654),
 ('/login-details/update', 2, '/login-details/update', NULL, NULL, 1432554654, 1432554654),
 ('/login-details/view', 2, '/login-details/view', NULL, NULL, 1432554654, 1432554654),
+('/mail/*', 2, '/mail/*', NULL, NULL, 1432554657, 1432554657),
 ('/national-holidays/*', 2, '/national-holidays/*', NULL, NULL, 1432554654, 1432554654),
 ('/national-holidays/create', 2, '/national-holidays/create', NULL, NULL, 1432554654, 1432554654),
 ('/national-holidays/delete', 2, '/national-holidays/delete', NULL, NULL, 1432554654, 1432554654),
@@ -483,6 +488,8 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/user/updatestudloginid', 2, '/user/updatestudloginid', NULL, NULL, 1432554657, 1432554657),
 ('/user/view', 2, '/user/view', NULL, NULL, 1432554656, 1432554656),
 ('Configuration', 2, 'Access Configuration views', NULL, NULL, 1429870570, 1430298672),
+('dependent/*', 2, 'dependent/*', NULL, NULL, 1432554657, 1432554657),
+('dependent/studsection', 2, 'dependent/studsection', NULL, NULL, 1432554657, 1432554657),
 ('Employee', 1, 'Employee', NULL, NULL, 1422967395, 1430299553),
 ('Rights', 2, 'Access Rights Module Link', NULL, NULL, 1430227237, 1431776281),
 ('Student', 1, 'Student', NULL, NULL, 1422958231, 1422958231),
@@ -506,6 +513,8 @@ CREATE TABLE `auth_item_child` (
 --
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+('Employee', '/counsel/index'),
+('Employee', '/counsel/view'),
 ('Employee', '/course/courses/index'),
 ('Employee', '/course/default/index'),
 ('Employee', '/dashboard/events/view-events'),
@@ -518,6 +527,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('Employee', '/employee/emp-master/update'),
 ('Employee', '/employee/emp-master/view'),
 ('Employee', '/employee/export-data/employee-profile-pdf'),
+('Employee', '/fees/dependent/*'),
 ('Employee', '/followup/*'),
 ('Employee', '/followup/default/index'),
 ('Employee', '/followup/stu-master/*'),
@@ -526,6 +536,8 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('Employee', '/followup/stu-master/index'),
 ('Employee', '/followup/stufollowupmaster/*'),
 ('Employee', '/followup/stufollowupmaster/createfollowup'),
+('Employee', '/followup/stufollowupmaster/index'),
+('Employee', '/mail/*'),
 ('Employee', '/report/default/index'),
 ('Employee', '/report/dependent/*'),
 ('Employee', '/report/empinforeport'),
@@ -536,12 +548,19 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('Employee', '/report/student/selected-student-list'),
 ('Employee', '/report/student/stuinforeport'),
 ('Employee', '/report/stuinforeport'),
+('Employee', '/student/*'),
 ('Employee', '/student/default/index'),
+('Employee', '/student/dependent/*'),
+('Employee', '/student/stu-master/create'),
 ('Employee', '/student/stu-master/index'),
+('Employee', '/student/stu-master/update'),
 ('Employee', '/student/stu-master/view'),
 ('Employee', '/stuinquiry/*'),
 ('Employee', '/stusearch/*'),
 ('Employee', '/user/change'),
+('Employee', 'dependent/*'),
+('Employee', 'dependent/studsection'),
+('Employee', 'updateAllStuInfo'),
 ('Student', '/course/courses/index'),
 ('Student', '/course/default/index'),
 ('Student', '/dashboard/events/view-events'),
@@ -1781,8 +1800,41 @@ INSERT INTO `login_details` (`login_detail_id`, `login_user_id`, `login_status`,
 (110, 31, 0, '2019-04-18 15:15:19', '2019-04-18 15:29:33', '::1'),
 (111, 31, 0, '2019-04-18 15:15:30', '2019-04-18 15:29:33', '::1'),
 (112, 31, 0, '2019-04-18 15:15:42', '2019-04-18 15:29:33', '::1'),
-(113, 31, 1, '2019-04-19 01:29:06', NULL, '::1'),
-(114, 31, 1, '2019-04-19 09:05:18', NULL, '::1');
+(113, 31, 0, '2019-04-19 01:29:06', '2019-04-19 13:07:28', '::1'),
+(114, 31, 0, '2019-04-19 09:05:18', '2019-04-19 13:07:28', '::1'),
+(115, 1, 0, '2019-04-19 13:07:33', '2019-04-19 13:37:54', '::1'),
+(116, 31, 0, '2019-04-19 13:38:02', '2019-04-20 09:47:01', '::1'),
+(117, 31, 0, '2019-04-20 09:33:32', '2019-04-20 09:47:01', '::1'),
+(118, 1, 0, '2019-04-20 09:47:06', '2019-04-20 09:55:38', '::1'),
+(119, 31, 0, '2019-04-20 09:55:45', '2019-04-20 09:57:14', '::1'),
+(120, 1, 0, '2019-04-20 09:57:18', '2019-04-20 13:12:21', '::1'),
+(121, 21, 0, '2019-04-20 13:12:41', '2019-04-20 13:28:44', '::1'),
+(122, 1, 0, '2019-04-20 13:28:50', '2019-04-20 13:39:50', '::1'),
+(123, 21, 0, '2019-04-20 13:39:57', '2019-04-20 13:48:23', '::1'),
+(124, 1, 0, '2019-04-20 13:48:28', '2019-04-20 13:48:35', '::1'),
+(125, 31, 0, '2019-04-20 13:48:40', '2019-04-20 14:08:06', '::1'),
+(126, 21, 0, '2019-04-20 14:08:11', '2019-04-20 14:24:23', '::1'),
+(127, 14, 0, '2019-04-20 14:24:30', '2019-04-20 14:27:07', '::1'),
+(128, 1, 0, '2019-04-20 14:28:26', '2019-04-23 23:56:53', '::1'),
+(129, 31, 0, '2019-04-23 18:22:02', '2019-04-23 18:25:48', '::1'),
+(130, 1, 0, '2019-04-23 18:25:53', '2019-04-23 23:56:53', '::1'),
+(131, 31, 0, '2019-04-23 23:57:00', '2019-04-24 00:05:39', '::1'),
+(132, 1, 0, '2019-04-24 00:05:47', '2019-04-24 00:10:16', '::1'),
+(133, 31, 0, '2019-04-24 00:10:22', '2019-04-24 02:19:14', '::1'),
+(134, 31, 0, '2019-04-24 09:50:39', '2019-04-24 12:23:33', '::1'),
+(135, 1, 0, '2019-04-24 12:23:40', '2019-04-24 12:24:33', '::1'),
+(136, 31, 0, '2019-04-24 12:24:40', '2019-04-25 02:02:46', '::1'),
+(137, 1, 0, '2019-04-25 02:02:52', '2019-04-25 02:30:30', '::1'),
+(138, 31, 0, '2019-04-25 02:30:36', '2019-04-25 02:44:22', '::1'),
+(139, 31, 0, '2019-04-25 08:26:34', '2019-04-25 08:57:50', '::1'),
+(140, 31, 0, '2019-04-25 08:58:52', '2019-04-25 09:08:33', '::1'),
+(141, 1, 0, '2019-04-25 09:09:00', '2019-04-25 09:11:18', '::1'),
+(142, 21, 0, '2019-04-25 09:11:25', '2019-04-25 12:52:00', '::1'),
+(143, 1, 0, '2019-04-25 12:52:11', '2019-04-25 12:54:29', '::1'),
+(144, 31, 0, '2019-04-25 12:54:36', '2019-04-25 16:28:06', '::1'),
+(145, 1, 0, '2019-04-25 16:28:15', '2019-04-25 16:29:54', '::1'),
+(146, 31, 0, '2019-04-25 16:30:03', '2019-04-25 16:34:15', '::1'),
+(147, 1, 0, '2019-04-25 16:36:15', '2019-04-25 17:52:42', '::1');
 
 -- --------------------------------------------------------
 
@@ -1906,7 +1958,8 @@ INSERT INTO `notice` (`notice_id`, `notice_title`, `notice_description`, `notice
 (11, 'last one', 'thi is last one', 'E', '2019-04-20', NULL, '2019-04-18 11:09:39', 1, '2019-04-18 11:11:13', 1, 2),
 (12, 'last', 'last one', 'E', '2019-04-20', NULL, '2019-04-18 11:11:51', 1, '2019-04-18 11:58:19', 1, 2),
 (13, 'another one', 'another one', 'E', '2019-04-30', NULL, '2019-04-18 11:16:28', 1, '2019-04-18 11:58:15', 1, 2),
-(14, 'Sem-8 Presentation', 'asdjkhjk', 'E', '2019-04-19', NULL, '2019-04-18 11:57:22', 1, '2019-04-18 11:58:10', 1, 2);
+(14, 'Sem-8 Presentation', 'asdjkhjk', 'E', '2019-04-19', NULL, '2019-04-18 11:57:22', 1, '2019-04-18 11:58:10', 1, 2),
+(15, 'Seminar', 'Eminar Desc', 'E', '2019-04-29', NULL, '2019-04-25 09:10:03', 1, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -2044,7 +2097,10 @@ INSERT INTO `stu_address` (`stu_address_id`, `stu_cadd`, `stu_cadd_city`, `stu_c
 (12, 'B-1/492 Janakpuri', 2, 1, 1, 342376, 'B-1', '(0234)4345565', '12/3 Kalkaji Extension, Opp. Nehru Place', 8, 2, 1, 456734, '12', '(022)2345687'),
 (13, '156, Bhagat Singh Market, Near Gole Market, Ahmedabad', 1, 1, 1, 342344, '12', '(0234)4345565', '174-176 Somdutt Chambers II, 9 Bhikaji Cama Place.', 3, 2, 1, 345456, '100', ' 	(022)2345687'),
 (14, 'Open Guarden, JP Office, Vaibhav Street', 4, 3, 2, 342344, '134', '(0234)4345564', 'Open Guarden, JP Office, Vaibhav Street', 4, 3, 2, 342344, '134', '(022)2345681'),
-(15, '300 BOYLSTON AVE E, SEATTLE WA 98102, USA', 4, 3, 2, 342344, '23', '(0234)4345565', '100 MAIN ST, PO BOX 1022, SEATTLE WA 98104, USA', 4, 3, 2, 345456, '100', '(022)2345687');
+(15, '300 BOYLSTON AVE E, SEATTLE WA 98102, USA', 1, 1, 1, 342344, '23', '(0234)4345565', '100 MAIN ST, PO BOX 1022, SEATTLE WA 98104, USA', 1, 1, 1, 345456, '100', '(022)2345687'),
+(16, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(18, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2166,15 +2222,30 @@ CREATE TABLE `stu_followup_2` (
 --
 
 INSERT INTO `stu_followup_2` (`followup_id`, `student_id`, `emp_id`, `status`, `comments`, `pending`, `stamp`, `finder`, `created_by`) VALUES
-(1, 13, 15, 'Fresh Candidate', 'No Commets.', 0, '2019-04-18 20:13:00', 0, 15),
-(2, 12, 15, 'Fees Pending', 'No need for Comments', 0, '2019-04-18 20:14:46', 0, 15),
-(3, 10, 15, 'Fees Pending', 'Needs more Counseling', 0, '2019-04-18 20:14:52', 0, 15),
-(4, 12, 15, 'Fees Pending', 'No need for Comments', 1, '2019-04-18 20:14:59', 0, 6),
-(5, 12, 6, 'Fresh Candidate', 'No Comments.', 0, '2019-04-18 20:15:17', 0, 15),
-(6, 2, 6, 'Fresh Candidate', 'Needs more Counseling', 0, '2019-04-18 20:15:28', 0, 15),
-(7, 12, 15, 'New Arrival', 'No Progress is done', 1, '2019-04-18 20:15:37', 0, 15),
-(8, 12, 15, 'Fees Pending', 'Needs further counseling on different courses', 0, '2019-04-18 20:15:41', 0, 15),
-(11, 3, 15, 'Career Counseling', 'No need for Comments', 0, '2019-04-19 06:16:19', 0, 15);
+(1, 13, 15, 'Fresh Candidate', 'No Commets.', 0, '2019-04-24 04:19:00', 0, 6),
+(2, 12, 15, 'Fees Pending', 'No need for Comments', 0, '2019-04-24 04:19:00', 0, 15),
+(3, 10, 15, 'Fees Pending', 'Needs more Counseling', 1, '2019-04-24 04:20:18', 0, 15),
+(4, 12, 15, 'Fees Pending', 'No need for Comments', 0, '2019-04-24 04:19:00', 0, 6),
+(5, 12, 6, 'Fresh Candidate', 'No Comments.', 0, '2019-04-24 04:19:00', 0, 15),
+(6, 2, 6, 'Fresh Candidate', 'Needs more Counseling', 0, '2019-04-24 04:19:00', 0, 15),
+(7, 12, 15, 'New Arrival', 'No Progress is done', 1, '2019-04-24 04:20:21', 0, 15),
+(8, 12, 15, 'Fees Pending', 'Needs further counseling on different courses', 1, '2019-04-24 04:20:23', 0, 15),
+(11, 3, 15, 'Career Counseling', 'No need for Comments', 0, '2019-04-24 04:19:00', 0, 12),
+(12, 3, 15, 'New Arrival', 'Needs further counseling on different courses', 0, '2019-04-24 04:19:00', 0, 12),
+(13, 8, 15, 'Interested', 'No Comments.', 0, '2019-04-24 04:19:00', 0, 15),
+(14, 8, 15, 'Interested', 'Needs Counseling', 1, '2019-04-24 04:20:27', 0, 15),
+(15, 12, 15, 'Looking for Another Area', 'No', 0, '2019-04-24 04:19:00', 0, 15),
+(16, 16, 15, 'Confirmed', 'There is a demo Comment', 0, '2019-04-24 04:44:02', 0, 15),
+(24, 16, 15, 'Confirmed', 'Demo Demo 1', 1, '2019-04-24 04:54:54', 0, 15),
+(25, 16, 15, 'Interested', 'Demo Comment', 0, '2019-04-24 06:46:38', 0, 15),
+(26, 4, 15, 'Interested', 'Demo Comment', 1, '2019-04-25 03:30:57', 0, 15),
+(27, 16, 5, 'Not Interested', '--', 1, '2019-04-25 03:41:59', 0, 15),
+(28, 13, 5, 'Interested but Conditional', '--', 0, '2019-04-25 05:59:12', 0, 5),
+(29, 13, 5, 'Interested', '--', 0, '2019-04-25 06:08:07', 0, 5),
+(30, 3, 15, 'Confirmed', '--', 1, '2019-04-25 08:13:55', 0, 12),
+(31, 12, 15, 'Confirmed', 'Demo Comment', 1, '2019-04-25 10:24:56', 0, 15),
+(32, 3, 15, 'Partially Confirmed', 'Demo Comment', 0, '2019-04-25 10:38:33', 0, 12),
+(33, 8, 15, 'Interested', '--', 0, '2019-04-25 10:40:46', 0, 15);
 
 -- --------------------------------------------------------
 
@@ -2256,7 +2327,7 @@ CREATE TABLE `stu_info` (
 --
 
 INSERT INTO `stu_info` (`stu_info_id`, `stu_unique_id`, `stu_title`, `stu_first_name`, `stu_middle_name`, `stu_last_name`, `stu_gender`, `stu_dob`, `stu_email_id`, `stu_bloodgroup`, `stu_birthplace`, `stu_religion`, `stu_admission_date`, `stu_photo`, `stu_languages`, `stu_mobile_no`, `stu_info_stu_master_id`) VALUES
-(1, 1, 'Mr.', 'Ankit', 'M', 'Narthi', 'Male', '1992-05-16', 'ankit_narthi@gmail.com', 'AB-', 'Ahmedabad', 'Hindu', '2015-06-01', NULL, 'English,Gujarati', 7695865796, 1),
+(1, 1, 'Mr.', 'Ankit', 'M', 'Narthi', '', '1992-05-16', 'ankit_narthi@gmail.com', 'AB-', 'Ahmedabad', 'Hindu', '2015-06-01', NULL, 'English,Gujarati', 7695865796, 1),
 (2, 2, 'Mr.', 'Kelvin', 'G', 'Kair', 'Male', '1995-05-18', 'kelvin-kair@gmail.com', 'A+', 'USA', 'Christianity', '2015-06-01', NULL, 'English,German', 8957345678, 2),
 (3, 3, 'Ms.', 'Elena', 'G', 'Kaith', 'Female', '1995-05-16', 'elenag@hotmail.com', 'O+', 'USA', 'Christianity', '2015-06-02', NULL, 'English,French', 9068545678, 3),
 (4, 4, 'Ms.', 'Nikita', 'N', 'Shah', 'Female', '1994-05-19', 'nikita_shah@gmail.com', 'AB+', 'Ahmedabad', 'Hindu', '2015-06-02', NULL, 'Gujarati,English,Hindi,French', 8957345678, 4),
@@ -2270,7 +2341,8 @@ INSERT INTO `stu_info` (`stu_info_id`, `stu_unique_id`, `stu_title`, `stu_first_
 (12, 12, 'Ms.', 'Brinzal', 'M', 'Thumar', 'Female', '1992-09-16', 'brinzal@yahoo.com', 'AB+', 'Ahmedabad', 'Hindu', '2015-05-30', NULL, 'English,Hindi', 7695865796, 12),
 (13, 13, 'Mr.', 'Kishan', 'M', 'Kumar', 'Male', '1993-06-01', 'kishan@gml.com', 'B+', 'Ahmedabad', 'Hindu', '2015-05-30', NULL, 'English,Hindi,Gujarati', 7695865797, 13),
 (14, 14, 'Mr.', 'Zakain', 'G', 'Zuila', 'Male', '1993-05-21', 'zakain@gmail.com', 'B-', 'USA', 'Christianity', '2015-06-15', NULL, 'English,German', 7695865796, 14),
-(15, 15, 'Ms.', 'Nash', 'H', 'Kabunda', 'Female', '1994-11-30', 'nash@gmail.com', 'A+', 'Ahmedabad', 'Jainism', '2015-06-03', NULL, 'French,English', 7695865796, 15);
+(15, 15, 'Ms.', 'Nash', 'H', 'Kabunda', 'Female', '1994-11-30', 'nash@gmail.com', 'A+', 'Ahmedabad', 'Jainism', '2015-06-03', NULL, 'French,English', 7695865796, 15),
+(16, 16, 'Mr.', 'Varun', 'R', 'Parekh', 'MALE', '1998-04-08', 'varun@gmail.com', 'Unknown', 'Ahmedabad', 'Hindu', '2019-04-09', NULL, 'English', 8878984534, 16);
 
 -- --------------------------------------------------------
 
@@ -2317,9 +2389,9 @@ CREATE TABLE `stu_master` (
   `stu_master_user_id` int(11) NOT NULL,
   `stu_master_nationality_id` int(11) DEFAULT NULL,
   `stu_master_category_id` int(11) DEFAULT NULL,
-  `stu_master_course_id` int(11) NOT NULL,
-  `stu_master_batch_id` int(11) NOT NULL,
-  `stu_master_section_id` int(11) NOT NULL,
+  `stu_master_course_id` int(11) NOT NULL DEFAULT '1',
+  `stu_master_batch_id` int(11) NOT NULL DEFAULT '1',
+  `stu_master_section_id` int(11) NOT NULL DEFAULT '1',
   `stu_master_stu_status_id` int(11) NOT NULL DEFAULT '0',
   `stu_master_stu_address_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
@@ -2334,21 +2406,22 @@ CREATE TABLE `stu_master` (
 --
 
 INSERT INTO `stu_master` (`stu_master_id`, `stu_master_stu_info_id`, `stu_master_user_id`, `stu_master_nationality_id`, `stu_master_category_id`, `stu_master_course_id`, `stu_master_batch_id`, `stu_master_section_id`, `stu_master_stu_status_id`, `stu_master_stu_address_id`, `created_at`, `created_by`, `updated_at`, `updated_by`, `is_status`) VALUES
-(1, 1, 2, 1, 1, 1, 1, 1, 0, 1, '2015-05-27 15:46:54', 1, '2015-05-28 11:48:16', 1, 0),
+(1, 1, 2, 1, 1, 1, 1, 1, 4, 1, '2015-05-27 15:46:54', 1, '2019-04-23 23:33:20', 1, 0),
 (2, 2, 3, 3, 1, 2, 2, 2, 1, 2, '2015-05-27 15:49:17', 1, '2015-05-28 11:57:02', 1, 0),
-(3, 3, 5, 2, 1, 3, 3, 3, 0, 3, '2015-05-27 15:52:16', 1, '2015-05-28 12:09:32', 1, 0),
-(4, 4, 6, 1, 1, 4, 4, 4, 0, 4, '2015-05-27 15:54:31', 1, '2015-05-28 12:18:44', 1, 0),
+(3, 3, 5, 2, 1, 3, 3, 3, 10, 3, '2015-05-27 15:52:16', 1, '2015-05-28 12:09:32', 1, 0),
+(4, 4, 6, 1, 1, 4, 4, 4, 5, 4, '2015-05-27 15:54:31', 1, '2015-05-28 12:18:44', 1, 0),
 (5, 5, 7, 3, 1, 5, 5, 5, 0, 5, '2015-05-27 15:56:35', 1, '2015-05-28 12:29:35', 1, 0),
-(6, 6, 8, 1, 1, 1, 1, 1, 0, 6, '2015-05-27 15:58:01', 1, '2015-05-28 12:38:51', 1, 0),
+(6, 6, 8, 1, 1, 1, 1, 1, 7, 6, '2015-05-27 15:58:01', 1, '2019-04-23 23:35:58', 1, 0),
 (7, 7, 9, 1, 1, 1, 1, 1, 0, 7, '2015-05-27 15:58:55', 1, '2015-05-28 12:47:58', 1, 0),
-(8, 8, 10, 1, 1, 1, 1, 1, 0, 8, '2015-05-27 15:59:46', 1, '2015-05-28 13:47:42', 1, 0),
-(9, 9, 11, 1, 1, 1, 1, 1, 0, 9, '2015-05-27 16:00:36', 1, '2015-05-28 14:03:25', 1, 0),
-(10, 10, 12, 3, 3, 2, 2, 2, 0, 10, '2015-05-27 16:03:10', 1, '2015-05-28 14:12:52', 1, 0),
+(8, 8, 10, 1, 1, 1, 1, 1, 5, 8, '2015-05-27 15:59:46', 1, '2019-04-23 23:35:38', 1, 0),
+(9, 9, 11, 1, 1, 1, 1, 1, 8, 9, '2015-05-27 16:00:36', 1, '2019-04-23 23:35:19', 1, 0),
+(10, 10, 12, 3, 3, 2, 2, 2, 10, 10, '2015-05-27 16:03:10', 1, '2019-04-23 23:35:03', 1, 0),
 (11, 11, 13, 1, 1, 3, 3, 3, 0, 11, '2015-05-27 16:04:12', 1, '2015-05-28 14:22:41', 1, 0),
-(12, 12, 14, 1, 1, 4, 4, 4, 0, 12, '2015-05-27 16:05:04', 1, '2015-05-27 18:18:03', 1, 0),
-(13, 13, 16, 1, NULL, 5, 5, 5, 0, 13, '2015-05-27 16:05:57', 1, '2015-05-28 11:12:01', 1, 0),
-(14, 14, 17, 4, 3, 2, 2, 2, 0, 14, '2015-05-27 16:07:27', 1, '2015-05-28 10:18:35', 1, 0),
-(15, 15, 18, NULL, 3, 3, 3, 3, 0, 15, '2015-05-27 16:09:01', 1, '2015-05-27 18:58:02', 1, 0);
+(12, 12, 14, 1, 1, 4, 4, 4, 4, 12, '2015-05-27 16:05:04', 1, '2019-04-23 23:34:42', 1, 0),
+(13, 13, 16, 1, NULL, 5, 5, 5, 5, 13, '2015-05-27 16:05:57', 1, '2019-04-23 23:34:17', 1, 0),
+(14, 14, 17, 4, 3, 2, 2, 2, 5, 14, '2015-05-27 16:07:27', 1, '2019-04-23 23:33:43', 1, 0),
+(15, 15, 18, NULL, 3, 3, 3, 3, 0, 15, '2015-05-27 16:09:01', 1, '2015-05-27 18:58:02', 1, 0),
+(16, 16, 35, 1, 1, 1, 1, 1, 9, 16, '2019-04-24 00:15:11', 31, '2019-04-24 00:20:42', 31, 0);
 
 -- --------------------------------------------------------
 
@@ -2372,9 +2445,15 @@ CREATE TABLE `stu_status` (
 --
 
 INSERT INTO `stu_status` (`stu_status_id`, `stu_status_name`, `stu_status_description`, `created_at`, `created_by`, `updated_at`, `updated_by`, `is_status`) VALUES
-(1, 'Rejoin', 'Rejoin', '2015-05-27 15:43:22', 1, NULL, NULL, 0),
-(2, 'Detain', 'Detain', '2015-05-27 15:44:12', 1, NULL, NULL, 0),
-(3, 'Pass out', 'Pass out', '2015-05-27 15:44:37', 1, NULL, NULL, 0);
+(1, 'Rejoin', 'Rejoin', '2015-05-27 15:43:22', 1, NULL, NULL, 1),
+(2, 'Detain', 'Detain', '2015-05-27 15:44:12', 1, NULL, NULL, 1),
+(3, 'Pass out', 'Pass out', '2015-05-27 15:44:37', 1, NULL, NULL, 1),
+(4, 'Confirmed', 'Confirmed', '2019-04-23 15:44:37', 1, NULL, NULL, 0),
+(5, 'Interested', 'Interested', '2019-04-23 23:44:37', 1, NULL, NULL, 0),
+(7, 'Interested but Conditional', 'Interested but Conditional', '2019-04-23 06:16:27', 1, NULL, NULL, 0),
+(8, 'Looking for Another Area', 'Looking for Another Area', '2019-04-23 06:16:27', 1, NULL, NULL, 0),
+(9, 'Not Interested', 'Not Interested', '2019-04-23 06:16:27', 1, NULL, NULL, 0),
+(10, 'Partially Confirmed', 'Fees Pending', '2019-04-23 06:16:27', 1, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -2432,7 +2511,8 @@ INSERT INTO `users` (`user_id`, `user_login_id`, `user_password`, `user_type`, `
 (31, 'EMP15', 'e28a9d86da3523c266ccd1e8fe230a41', 'E', 0, '2015-05-28 13:03:55', 1, NULL, NULL),
 (32, 'EMP16', '49798c363d34f4c2716bc5494b2b380c', 'E', 0, '2015-05-28 13:11:32', 1, NULL, NULL),
 (33, 'employee', '9c0967753a201ecde21ef29efa514761', 'E', 0, '2015-05-28 14:42:13', 1, '2015-05-28 15:23:38', 1),
-(34, 'EMP18', '78828f77df93edd91dc1358146490fd6', 'E', 0, '2019-04-16 12:46:14', 1, NULL, NULL);
+(34, 'EMP18', '78828f77df93edd91dc1358146490fd6', 'E', 0, '2019-04-16 12:46:14', 1, NULL, NULL),
+(35, 'STU16', 'fa4b1cfe65560a7390e43543a9be291d', 'S', 0, '2019-04-24 00:15:11', 31, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -2942,7 +3022,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `login_details`
 --
 ALTER TABLE `login_details`
-  MODIFY `login_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `login_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
 --
 -- AUTO_INCREMENT for table `msg_of_day`
 --
@@ -2962,7 +3042,7 @@ ALTER TABLE `national_holidays`
 -- AUTO_INCREMENT for table `notice`
 --
 ALTER TABLE `notice`
-  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `organization`
 --
@@ -2982,7 +3062,7 @@ ALTER TABLE `state`
 -- AUTO_INCREMENT for table `stu_address`
 --
 ALTER TABLE `stu_address`
-  MODIFY `stu_address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `stu_address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `stu_category`
 --
@@ -3002,7 +3082,7 @@ ALTER TABLE `stu_followup`
 -- AUTO_INCREMENT for table `stu_followup_2`
 --
 ALTER TABLE `stu_followup_2`
-  MODIFY `followup_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `followup_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `stu_guardians`
 --
@@ -3012,7 +3092,7 @@ ALTER TABLE `stu_guardians`
 -- AUTO_INCREMENT for table `stu_info`
 --
 ALTER TABLE `stu_info`
-  MODIFY `stu_info_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `stu_info_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `stu_inquiry`
 --
@@ -3022,17 +3102,17 @@ ALTER TABLE `stu_inquiry`
 -- AUTO_INCREMENT for table `stu_master`
 --
 ALTER TABLE `stu_master`
-  MODIFY `stu_master_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `stu_master_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `stu_status`
 --
 ALTER TABLE `stu_status`
-  MODIFY `stu_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `stu_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 --
 -- Constraints for dumped tables
 --
@@ -3343,6 +3423,14 @@ ALTER TABLE `stu_status`
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`user_id`),
   ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`user_id`);
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `Reset pending value` ON SCHEDULE EVERY 2 DAY STARTS '2019-04-23 00:00:00' ENDS '2019-04-30 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE stu_followup_2 SET pending = 0 WHERE pending = 1$$
+
+DELIMITER ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

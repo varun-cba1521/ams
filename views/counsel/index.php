@@ -13,7 +13,21 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'emp_id')->textInput(['readonly' => true]) ?>
         <?= $form->field($model, 'stu_name')->textInput(); ?>
-        <?= $form->field($model, 'stu_dob')->widget(\yii\jui\DatePicker::class, ['options' => ['class' => 'form-control'],]); ?>
+		<?= $form->field($model, 'stu_dob')->widget(yii\jui\DatePicker::className(),
+	            [
+			'model'=>$model,
+			'attribute'=>'stu_dob', 
+	            'clientOptions' =>[
+	                'dateFormat' => 'dd-mm-yyyy',
+	                'changeMonth'=> true,
+			'yearRange'=>'1900:'.(date('Y')+1),
+	                'changeYear'=> true,
+			'readOnly'=>true,
+	                'autoSize'=>true,],
+	            'options'=>[
+			'class'=>'form-control',
+	                 ],]) 
+		?>
         <?= $form->field($model, 'stu_gender')->dropDownList(['Female'=>'Female','Male'=>'Male','Other'=>'Other']); ?>
         <?= $form->field($model, 'stu_city')->textInput(); ?>
 		<?= $form->field($model, 'stu_mobile_no')->textInput(['maxlength' => '12']) ?>

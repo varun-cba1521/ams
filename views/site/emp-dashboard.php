@@ -114,11 +114,11 @@ $this->registerJs(
                                 <div class="inner">
                                     <h3>
 									<?php
-									$getcount = new Query();
-									$getcount->select('*')->from('stu_followup_2 f')->join('join','stu_info s','s.stu_info_id = f.student_id and f.emp_id = :id',array(':id' => $empSession))->groupBy('f.student_id')->having(['pending' => 0])->createCommand()->queryAll();
-									$pending_count = $getcount->count();
+									$getcount = app\models\StuFollowup2::findBySql('select * from stu_followup_2 where followup_id in (select max(followup_id) from stu_followup_2 group by student_id having emp_id='.$empSession.' and pending=0)')->all();
+									/* $getcount = new Query();
+									$getcount->select('*')->from('stu_followup_2 f')->join('join','stu_info s','s.stu_info_id = f.student_id and f.emp_id = :id',array(':id' => $empSession))->groupBy('f.student_id')->having(['pending' => 0])->createCommand()->queryAll(); */
+									echo count($getcount);
 									?>
-                                       <?= $pending_count; ?>
                                     </h3>
                                     <p>
                                         <?php echo Yii::t('app', 'Pending Follow-ups') ?>

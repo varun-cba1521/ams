@@ -67,9 +67,9 @@ if($data){
 		</div>
 		<div class="box-footer clearfix">
 			<?php if(Yii::$app->user->can("/student/stu-master/create")) { ?>
-			    <?php echo Html::a(Yii::t('stu', 'Add Student'), ['student/stu-master/create'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
+			    <?php echo Html::a(Yii::t('stu', 'Add Student'), ['/student/stu-master/create'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
 			<?php } ?>
-			<?php echo Html::a(Yii::t('stu', 'View All Students'), ['student/stu-master/index'], ['class'=>'btn btn-sm btn-default btn-flat pull-right']); ?>
+			<?php echo Html::a(Yii::t('stu', 'View All Students'), ['/student/stu-master/index'], ['class'=>'btn btn-sm btn-default btn-flat pull-right']); ?>
 			<br/><br/>
 			<?= Html::a(Yii::t('app', 'Inquire'), ['/stuinquiry/inquiry2'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
 		</div>
@@ -80,7 +80,7 @@ if($data){
 	else{ ?>
 		<div class="box-footer clearfix">
 			<?php if(Yii::$app->user->can("/student/stu-master/create")) { ?>
-			    <?php echo Html::a(Yii::t('stu', 'Add Student'), ['stu-master/create'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
+			    <?php echo Html::a(Yii::t('stu', 'Add Student'), ['/student/stu-master/create'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
 			<?php } ?>
 		</div>
 		<br/><br/>
@@ -132,9 +132,9 @@ if($data){
 		</div>
 		<div class="box-footer clearfix">
 			<?php if(Yii::$app->user->can("/employee/emp-master/create")) { ?>
-			    <?php echo Html::a(Yii::t('emp', 'Add Employee'), ['employee/emp-master/create'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
+			    <?php echo Html::a(Yii::t('emp', 'Add Employee'), ['/employee/emp-master/create'], ['class'=>'btn btn-sm btn-info btn-flat pull-left']); ?>
 			<?php } ?>
-			<?php echo Html::a(Yii::t('emp', 'View All Employees'), ['employee/emp-master/index'], ['class'=>'btn btn-sm btn-default btn-flat pull-right']); ?>
+			<?php echo Html::a(Yii::t('emp', 'View All Employees'), ['/employee/emp-master/index'], ['class'=>'btn btn-sm btn-default btn-flat pull-right']); ?>
 		</div>
 	</div>	
 </div>

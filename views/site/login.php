@@ -8,7 +8,7 @@ $this->title = Yii::t('app', 'EduSec | Login');
 		&nbsp;
       </div><!-- /.login-logo -->
       <div class="login-box-body login-header">
-		<h1><?= Html::img(Yii::$app->request->baseUrl.'/images/product.png', ['width'=>'350px;']) ?></h1>
+		<h1><?= Html::img(Yii::$app->request->baseUrl.'/images/product.png', ['width'=>'220px;','height'=>'90px;']) ?></h1>
       </div>
       <div class="login-box-body">
   	
