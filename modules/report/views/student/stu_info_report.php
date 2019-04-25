@@ -28,8 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h3 class="box-title"><i class="fa fa-info-circle"></i> <?= $this->title ?></h3>
                 <div class="box-tools <?= (Yii::$app->language == 'ar') ? 'pull-left' : 'pull-right'; ?>">
       	         <?php echo Html::a('<i class="fa fa-arrow-circle-left"></i> ' .Yii::t('report', "Back"), ['student/stuinforeport'],['class'=>'btn btn-back', 'style'=>'color:#fff']);?>
-	              <?php echo Html::a('<i class="fa fa-file-excel-o"></i> '.Yii::t('report', "Excel"),['stuinforeport','exportExcel'=>'excel'],array('title'=>'Export to Excel','target'=>'_blank','class'=>'btn btn-info', 'style'=>'color:#fff'));?>
-	              <?php echo Html::a('<i class="fa fa-file-pdf-o"></i> ' .Yii::t('report', "PDF"),array('stuinforeport','exportPDF'=>'PDF'),array('title'=>'Export to PDF','target'=>'_blank','class'=>'btn btn-warning', 'style'=>'color:#fff')); ?>
+				 <?php if(Yii::$app->user->can('Rights')){
+					  echo Html::a('<i class="fa fa-file-excel-o"></i> '.Yii::t('report', "Excel"),['stuinforeport','exportExcel'=>'excel'],array('title'=>'Export to Excel','target'=>'_blank','class'=>'btn btn-info', 'style'=>'color:#fff'));
+					  echo Html::a('<i class="fa fa-file-pdf-o"></i> ' .Yii::t('report', "PDF"),array('stuinforeport','exportPDF'=>'PDF'),array('title'=>'Export to PDF','target'=>'_blank','class'=>'btn btn-warning', 'style'=>'color:#fff'));
+				  }
+				  ?>
                 </div>
             </div><!-- /.box-header -->
 

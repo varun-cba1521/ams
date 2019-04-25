@@ -103,10 +103,12 @@
                 <label class="checkbox-inline">
     		<input type="checkbox" class="checkbox" name="s_info[]" id="stu_padd" value="stu_padd"/>&nbsp;<?php echo Yii::t('report', 'International Address'); ?></label>
     	</div>
+		<!--
 		<div class = "col-sm-3 col-lg-3 col-xs-12" style="padding:3px;">
                 <label class="checkbox-inline">
     		<input type="checkbox" class="checkbox" name="s_info[]" id="stu_status" value="stu_status"/>&nbsp;<?php echo Yii::t('report', 'Student Status'); ?></label>
     	</div>
+		-->
        </div>
     </div>
 
